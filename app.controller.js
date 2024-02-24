@@ -113,6 +113,23 @@ function ChatBotController($http, $window, $scope)  {
     }
   }
 
+  ctrl.handleInputChange = function() {
+    var chatInput = $window.document.querySelector(".chat-input textarea");
+    const inputInitHeight = chatInput.scrollHeight;
+    chatInput.style.height = `${inputInitHeight}px`
+    chatInput.style.height = `${chatInput.scrollHeight}px`;
+  };
+
+  ctrl.handleKeyDown = function(event) {
+    if(event.key === 'Enter' && !event.shiftKey && $window.innerWidth > 800) {
+      event.preventDefault();
+      ctrl.handlSendClick() // Предполагается, что у вас есть функция handleChat
+    }
+  };
+
+  $window.document.querySelector(".chat-input textarea").addEventListener("input", ctrl.handleInputChange);
+  $window.document.querySelector(".chat-input textarea").addEventListener("keydown", ctrl.handleKeyDown);
+
   ctrl.closeChatBot = function() {
     $window.document.body.classList.remove('show-chatbot');
   }
