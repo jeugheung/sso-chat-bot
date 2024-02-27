@@ -41,7 +41,7 @@
     </ul>
     <div class="chat-input">
       <textarea placeholder="Введите сообщение..." required></textarea>
-      <span id="send-btn" class="material-symbols-outlined" ng-click="$ctrl.handlSendClick()">send</span>
+      <span id="send-btn" ng-if="!$ctrl.blockBtn" class="material-symbols-outlined" ng-click="$ctrl.handlSendClick()">send</span>
     </div>
   </div>
 </div>

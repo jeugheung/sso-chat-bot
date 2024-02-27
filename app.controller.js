@@ -4,8 +4,10 @@ function ChatBotController($http, $window, $scope)  {
   ctrl.historyData = [];
   ctrl.createdElements = [];
   ctrl.isLoading = true;
+  ctrl.blockBtn = false;
 
   function createChatLi(message, className) {
+    ctrl.blockBtn = true;
     const chatLi = $window.document.createElement("li")
     chatLi.classList.add("chat", className);
     let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-outlined">smart_toy</span><p></p>`
@@ -36,15 +38,18 @@ function ChatBotController($http, $window, $scope)  {
         var data = response.data;
         messageElement.textContent = data.answer;
         messageElement.classList.remove("loadingDots");
+        ctrl.blockBtn = false;
       })
       .catch(function(error) {
         messageElement.classList.remove("loadingDots");
         messageElement.classList.add("error");
         messageElement.textContent = 'Упс что-то пошло не так';
+        ctrl.blockBtn = false;
       })
       .finally(function() {
         var chatBox = $window.document.querySelector(".chatbox");
         chatBox.scrollTo(0, chatBox.scrollHeight);
+        ctrl.blockBtn = false;
       });
   }
 
